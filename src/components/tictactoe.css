@@ -1,0 +1,15 @@
+table td{
+    border: 1px solid grey;
+    width: 100px;
+    height: 100px;
+    padding: 0%;
+}
+table {
+    margin: 10rem;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    align-content: center;
+
+}
