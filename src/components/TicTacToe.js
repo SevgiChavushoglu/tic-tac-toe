@@ -1,50 +1,28 @@
-import styles from "./tictactoe.css";
+import STYLES from "./tictactoe.css";
 import { useEffect, useState } from "react";
+import { checkWinner } from "../utils/checkWinner";
 export function TicTacToe() {
   const [cells, selCells] = useState({});
   const [turn, setTurn] = useState("X");
-  const [winner, setWinner] = useState(false);
-  function isWin(cells, turn) {
-    let count = 0;
-    const cases = [
-      [1, 2, 3],
-      [4, 5, 6],
-      [7, 8, 9],
-      [1, 4, 7],
-      [2, 5, 8],
-      [3, 6, 9],
-      [1, 5, 9],
-      [3, 5, 7],
-    ];
-    for (let item of cases) {
-      let count = 0;
-      item.map((num) => {
-        if (cells[num] === turn) {
-          count += 1;
-        }
-      });
-      if (count === 3) {
-        alert(`${turn} is the winner!`);
-        return true;
-      }
+  const [winner, setWinner] = useState(null);
+  useEffect(() => {
+    checkWinner(cells, turn, setWinner);
+  }, [cells, turn]);
+  function handleRestart(winner) {
+    if (winner) {
+      selCells({});
+      setTurn("X");
+      setWinner(null);
     }
   }
   function handleClick(num) {
+    selCells({ ...cells, [num]: turn });
     if (turn === "X") {
       setTurn("O");
     } else {
       setTurn("X");
     }
-    console.log("Clicked!", num);
-    selCells({ ...cells, [num]: turn });
-    if (isWin(cells, turn)) {
-      setWinner(turn);
-    }
   }
-  console.log(isWin(cells, turn));
-  console.log("Cells:", cells);
-  console.log("turn:", turn);
-  console.log("winner:", winner);
   const Cell = ({ num }) => {
     return <td onClick={() => handleClick(num)}>{cells[num]}</td>;
   };
@@ -52,6 +30,7 @@ export function TicTacToe() {
   return (
     <>
       {turn}'s turn
+      {winner ? <p>{winner} won!</p> : null}
       <table>
         <tbody>
           <tr>
@@ -71,6 +50,7 @@ export function TicTacToe() {
           </tr>
         </tbody>
       </table>
+      {winner && <button onClick={handleRestart}>Restart</button>}
     </>
   );
 }
