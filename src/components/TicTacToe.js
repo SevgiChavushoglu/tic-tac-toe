@@ -8,6 +8,7 @@ export function TicTacToe() {
   useEffect(() => {
     checkWinner(cells, turn, setWinner);
   }, [cells, turn]);
+  
   function handleRestart(winner) {
     if (winner) {
       selCells({});
