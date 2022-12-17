@@ -2,22 +2,22 @@ import STYLES from "./tictactoe.css";
 import { useEffect, useState } from "react";
 import { checkWinner } from "../utils/checkWinner";
 export function TicTacToe() {
-  const [cells, selCells] = useState({});
+  const [cells, setCells] = useState({});
   const [turn, setTurn] = useState("X");
   const [winner, setWinner] = useState(null);
   useEffect(() => {
     checkWinner(cells, turn, setWinner);
   }, [cells, turn]);
-  
+
   function handleRestart(winner) {
     if (winner) {
-      selCells({});
+      setCells({});
       setTurn("X");
       setWinner(null);
     }
   }
   function handleClick(num) {
-    selCells({ ...cells, [num]: turn });
+    setCells({ ...cells, [num]: turn });
     if (turn === "X") {
       setTurn("O");
     } else {

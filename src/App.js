@@ -1,11 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { TicTacToe } from "./components/TicTacToe";
 import { Room } from "./components/Room";
 import socketService from "./services/socketService";
 import io from "socket.io-client";
+import AppContext from "./AppContext";
 
 function App() {
+  const [isInRoom, setIsInRoom] = useState(false);
+
   const socket = io.connect("http://localhost:9000");
   const connectSokcket = async () => {
     const socket = await socketService
@@ -17,11 +20,16 @@ function App() {
   useEffect(() => {
     connectSokcket();
   }, []);
+
+  const appContextValue = {
+    isInRoom,
+    setIsInRoom,
+  };
   return (
-    <div className="App">
+    <AppContext.Provider value={appContextValue}>
       <Room />
-      <TicTacToe />
-    </div>
+      {/* <TicTacToe /> */}
+    </AppContext.Provider>
   );
 }
 
