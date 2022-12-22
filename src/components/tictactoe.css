@@ -3,6 +3,7 @@ table td{
     width: 100px;
     height: 100px;
     padding: 0%;
+    align-content: center;
 }
 table {
     margin: 5rem;
@@ -13,3 +14,5 @@ table {
     align-content: center;
 
 }
+
+

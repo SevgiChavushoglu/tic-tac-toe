@@ -1,6 +1,7 @@
-import STYLES from "./tictactoe.css";
 import { useEffect, useState } from "react";
 import { checkWinner } from "../utils/checkWinner";
+import styles from "./tictactoe.css";
+
 export function TicTacToe() {
   const [cells, setCells] = useState({});
   const [turn, setTurn] = useState("X");

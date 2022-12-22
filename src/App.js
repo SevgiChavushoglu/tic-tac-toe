@@ -27,10 +27,12 @@ function App() {
   };
   return (
     <AppContext.Provider value={appContextValue}>
-      <Room />
-      {/* <TicTacToe /> */}
+      {!isInRoom && <Room />}
+      {isInRoom && <TicTacToe />}
     </AppContext.Provider>
   );
 }
 
 export default App;
+
+// carry on from 1.25 of the video
