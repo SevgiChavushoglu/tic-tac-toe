@@ -7,6 +7,7 @@ import checkGameState from "../utils/checkGameState";
 import gameService from "../services/gameService";
 import socketService from "../services/socketService";
 import Loader from "./Loader";
+import EndOfGameModal from "./EndOfGameModal";
 
 export type IPlayMatrix = Array<Array<string | null>>;
 export interface IstartGame {
@@ -29,6 +30,8 @@ const PlayStopper = styled.div`
 `;
 
 export function TicTacToe() {
+  const [showModal, setShowModal] = useState(false);
+  const [endOfGameMessage, setEndOfGameMessage] = useState("");
   const [matrix, setMatrix] = useState<IPlayMatrix>([
     [null, null, null],
     [null, null, null],
@@ -59,10 +62,12 @@ export function TicTacToe() {
       );
       if (currentPlayerWon && otherPlayerWon) {
         gameService.gameWin(socketService.socket, "The game is a tie");
-        alert("The game is a tie");
+        setEndOfGameMessage("The game is a tie!");
+        setShowModal(true);
       } else if (currentPlayerWon && !otherPlayerWon) {
-        gameService.gameWin(socketService.socket, "you lost");
-        alert("You won");
+        gameService.gameWin(socketService.socket, "You lost :(");
+        setEndOfGameMessage("You won!");
+        setShowModal(true);
       }
 
       setPlayerTurn(false);
@@ -97,10 +102,12 @@ export function TicTacToe() {
     if (socketService.socket) {
       gameService.onGameWin(socketService.socket, (message) => {
         setPlayerTurn(false);
-        alert(message);
+        setShowModal(true);
+        setEndOfGameMessage(message);
       });
     }
   };
+
   useEffect(() => {
     handleGameUpdate();
     handleGameStart();
@@ -109,12 +116,13 @@ export function TicTacToe() {
 
   return (
     <div className="p-3 d-flex flex-column  justify-content-center align-items-center">
+      <EndOfGameModal show={showModal} message={endOfGameMessage} />
       {!isGameStarted && (
         <h2 className="text-primary ">
           Waiting for other player to join to start the Game!
         </h2>
       )}
-      {isGameStarted && !isPlayerTurn && (
+      {isGameStarted && !isPlayerTurn && !showModal && (
         <div className="d-flex flex-column justify-content-center align-items-center">
           <p className="text-info fs-3 mb-0">
             Waiting for your opponent to play...
