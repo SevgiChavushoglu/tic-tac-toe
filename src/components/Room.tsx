@@ -8,10 +8,8 @@ import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 
 export function Room() {
-  const [roomName, setRoomName] = useState("");
   const [isJoining, setIsJoining] = useState(false);
-
-  const { setIsInRoom } = useContext(AppContext);
+  const { setIsInRoom, roomName, setRoomName } = useContext(AppContext);
 
   const handleRoomNameChange = (e: React.ChangeEvent<any>) => {
     const value = e.target.value;

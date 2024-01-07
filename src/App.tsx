@@ -9,6 +9,7 @@ function App() {
   const [playerSymbol, setPlayerSymbol] = useState<"x" | "o">("x");
   const [isPlayerTurn, setPlayerTurn] = useState(false);
   const [isGameStarted, setGameStarted] = useState(false);
+  const [roomName, setRoomName] = useState("");
 
   // creating socket instance
   const connectSokcket = async () => {
@@ -29,6 +30,8 @@ function App() {
     setIsInRoom,
     playerSymbol,
     setPlayerSymbol,
+    roomName,
+    setRoomName,
     isPlayerTurn,
     setPlayerTurn,
     isGameStarted,

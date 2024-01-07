@@ -35,6 +35,10 @@ class GameService {
   public async onGameWin(socket: Socket, listener: (message: string) => void) {
     socket.on("on_game_win", ({ message }) => listener(message));
   }
+
+  public async restartGame(socket: Socket, message: {}) {
+    socket.emit("restart_game", message);
+  }
 }
 
 export default new GameService();
