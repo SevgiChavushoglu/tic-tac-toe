@@ -166,7 +166,9 @@ export function TicTacToe() {
         </div>
       )}
       {isInRoom && (
-        <p className="text-success fs-3">You are in room "{roomName}" </p>
+        <p className="text-success fs-3">
+          You are in room <b>{roomName}</b>{" "}
+        </p>
       )}
       {isGameStarted && isPlayerTurn && (
         <div className="d-flex flex-column justify-content-center align-items-center">
